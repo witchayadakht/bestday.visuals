@@ -1,11 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<title>Beatday.visuals - Concert</title>
+
+<!-- Font Awesome สำหรับ icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: white;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #000;
+  padding: 10px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+/* Logo */
+.logo { cursor: pointer; }
+.logo-img { height: 40px; width: auto; transition: 0.3s; }
+.logo-img:hover { transform: scale(1.1); }
+
+/* Menu */
+.menu { 
+  display: flex;
+  margin-right: 20px;
+  flex-wrap: wrap;
+  align-items: center; 
+}
+.menu a { 
+  margin-left: 15px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  position: relative;
+  padding-bottom: 4px;
+  transition: 0.3s;
+}
+
+/* Hover underline สำหรับ Concert / EDM */
+.menu a:hover:not(.contact-btn)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+}
+
+/* Contact button */
+.contact-btn {
+  border: 2px solid #fff;
+  border-radius: 20px;
+  padding: 8px 18px;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+  transition: 0.3s;
+}
+.contact-btn:hover {
+  transform: rotate(-5deg);
+  background: #fff;
+  color: #000;
+}
+.contact-btn::after {
+  content:"";
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:white;
+  top:30%;
+  left:30%;
+  opacity:0;
+}
+.contact-btn:hover::after {
+  opacity:1;
+  animation:sparkle .6s;
+}
+@keyframes sparkle {
+  0%{opacity:0}
+  50%{opacity:1}
+  100%{opacity:0}
+}
+
+/* Fullscreen Concert Container */
+.fullscreen-container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.fullscreen-container a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-decoration: none;
+  color: white;
+}
+.fullscreen-container img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+}
+/* EDM สีม่วง/ฟ้า */
+.fullscreen-container:nth-child(3) .overlay {
+  background: linear-gradient(90deg, #ffffff, #ff00ff, #00f0ff);
+  
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 10px rgba(0,255,255,0.7),
+    0 0 20px rgba(255,0,255,0.6),
+    0 0 40px rgba(0,255,255,0.4);
+}
+/* Overlay ชื่อ Concert */
+.overlay {
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%) translateY(30px);
+  
+  font-size: 80px; /* ใหญ่ขึ้น */
+  font-weight: 800;
+  letter-spacing: 5px;
+
+  background: linear-gradient(90deg, #ffffff, #bbbbbb, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.6),
+    0 0 20px rgba(255,255,255,0.4),
+    0 0 40px rgba(255,255,255,0.2);
+
+  pointer-events:none;
+  transition: all 0.4s ease;
+  opacity:0;
+}
+/* Caption ล่าง */
+.caption {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events:none;
+}
+/* Hover effect overlay + caption */
+.fullscreen-container:hover .overlay {
+  opacity:1;
+  transform: translate(-50%, -50%) translateY(0);
+}
+.fullscreen-container:hover .caption {
+  opacity:1;
+  transform: translateY(-5px);
+}
+
+/* Footer layout */
+.footer {
+  background:#000;
+  padding:60px 40px;
+  box-sizing: border-box;
+}
+.footer-container {
+  display:flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.footer-left,
+.footer-right {
+  width: auto;
+  text-align: left;
+}
+
+/* Social Icons */
+.social-icons {
+  margin-top:20px;
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+  gap:15px;
+}
+.social-icons a {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  border:2px solid white;
+  font-size:18px;
+  color:white;
+  transition:.3s;
+}
+.social-icons .fb:hover { background:#1877f2; box-shadow:0 0 15px #1877f2; }
+.social-icons .ig:hover { background:#e1306c; box-shadow:0 0 15px #e1306c; }
+.social-icons .line:hover { background:#00c300; box-shadow:0 0 15px #00c300; }
+
+/* Responsive */
+@media(max-width:1024px){
+  .overlay { font-size:36px; }
+  .caption { font-size:16px; }
+}
+@media(max-width:768px){
+  .navbar { flex-direction: column; align-items: flex-start; padding:10px 20px;}
+  .menu { margin-right:0; margin-top:10px; flex-wrap: wrap; align-items: center; }
+  .menu a { margin-left:0; margin-right:15px; }
+  .overlay { font-size:32px; }
+  .caption { font-size:14px; }
+  .footer-container { flex-direction: column; align-items: center; text-align:center; }
+  .footer-left,.footer-right { width:100%; padding:0; border:none; margin-top:20px;}
+}
+</style>
 </head>
 <body>
-    
+
+<!-- Navbar -->
+<div class="navbar">
+  <div class="logo" onclick="window.location.href='index.html'">
+    <img src="asset/logo.png" alt="Beatday.visuals" class="logo-img">
+  </div>
+  <div class="menu">
+    <a href="concert.html">Concert</a>
+    <a href="edm.html">EDM</a>
+    <a href="#footer" class="contact-btn">Contact</a>
+  </div>
+</div>
+
+<!-- Fullscreen Concert Image -->
+<div class="fullscreen-container">
+  <a href="concert.html">
+    <img src="asset/BESETER_CONCERT_6.jpg" alt="Concert Image">
+    <div class="overlay">Concert</div>
+    <div class="caption">CLICK IMAGE TO VIEW ALBUM</div>
+  </a>
+</div>
+
+<div class="fullscreen-container">
+  <a href="edm.html">
+    <img src="asset/BESETER_EDM_34.jpg" alt="EDM Image">
+    <div class="overlay">EDM</div>
+    <div class="caption">CLICK IMAGE TO VIEW ALBUM</div>
+  </a>
+</div>
+
+<!-- Footer -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    <div class="footer-left">
+      <h2>Contact Us</h2>
+      <p>Email: bestday@email.com</p>
+      <div class="social-icons">
+        <a href="#" class="fb"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="ig"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="line"><i class="fab fa-line"></i></a>
+      </div>
+    </div>
+    <div class="footer-right">
+      <h2>About Me</h2>
+      <p>Bestday.visuals  คือเว็บไซต์รวมงาน Concert และ EDM สำหรับสายดนตรีและสายปาร์ตี้</p>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
